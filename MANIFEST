@@ -1,4 +1,3 @@
-Changes
 COPYING.txt
 inc/Module/AutoInstall.pm
 inc/Module/Install.pm
@@ -15,6 +14,7 @@ inc/Sub/Uplevel.pm
 inc/Test/Exception.pm
 lib/Test/XML/Compare.pm
 lib/XML/Compare.pm
+lib/XML/Compare/Changes.pod
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
@@ -26,9 +26,11 @@ t/01-basic.t
 t/02-attribute.t
 t/03-comments.t
 t/04-exceptions.t
+t/05-cdata.t
 t/50-load.t
 t/51-basic.t
 t/52-attribute.t
 t/53-comments.t
+t/55-cdata.t
 t/pod-coverage.t
 t/pod.t

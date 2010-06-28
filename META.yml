@@ -3,14 +3,11 @@ abstract: 'Test if two XML documents semantically the same'
 author:
   - 'Andrew Chilton <andychilton@gmail.com>'
 build_requires:
-  ExtUtils::MakeMaker: 6.42
   Test::Builder::Tester: 0
   Test::Exception: 0
   Test::More: 0
-configure_requires:
-  ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: 'Module::Install version 0.91'
+generated_by: 'Module::Install version 0.77'
 license: artistic
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -24,6 +21,5 @@ requires:
   Any::Moose: 0
   XML::LibXML: 1.58
 resources:
-  license: http://opensource.org/licenses/artistic-license.php
   repository: git://github.com/catalyst/XML-Compare
-version: 0.02
+version: 0.03
