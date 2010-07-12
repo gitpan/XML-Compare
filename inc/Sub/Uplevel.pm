@@ -1,23 +1,9 @@
 #line 1
 package Sub::Uplevel;
 
-use 5.006;
 use strict;
-our $VERSION = '0.2002';
-$VERSION = eval $VERSION;
-
-sub import {
-  no strict 'refs';
-  my ($class, @args) = @_;
-  for my $fcn ( @args ) {
-    if ( $fcn ne 'uplevel' ) {
-      die qq{"$fcn" is not exported by the $class module\n}
-    }
-  }
-  my $caller = caller(0);
-  *{"$caller\::uplevel"} = \&uplevel;
-  return;
-}
+use vars qw($VERSION @ISA @EXPORT);
+$VERSION = '0.1901';
 
 # We must override *CORE::GLOBAL::caller if it hasn't already been 
 # overridden or else Perl won't see our local override later.
@@ -26,24 +12,20 @@ if ( not defined *CORE::GLOBAL::caller{CODE} ) {
     *CORE::GLOBAL::caller = \&_normal_caller;
 }
 
+require Exporter;
+@ISA = qw(Exporter);
+@EXPORT = qw(uplevel);
 
-#line 96
+#line 83
 
+use vars qw/@Up_Frames $Caller_Proxy/;
 # @Up_Frames -- uplevel stack
 # $Caller_Proxy -- whatever caller() override was in effect before uplevel
-our (@Up_Frames, $Caller_Proxy);
-
-sub _apparent_stack_height {
-    my $height = 1; # start above this function 
-    while ( 1 ) {
-        last if ! defined scalar $Caller_Proxy->($height);
-        $height++;
-    }
-    return $height - 1; # subtract 1 for this function
-}
 
 sub uplevel {
     my($num_frames, $func, @args) = @_;
+    
+    local @Up_Frames = ($num_frames, @Up_Frames );
     
     # backwards compatible version of "no warnings 'redefine'"
     my $old_W = $^W;
@@ -57,13 +39,6 @@ sub uplevel {
     # restore old warnings state
     $^W = $old_W;
 
-    if ( $num_frames >= _apparent_stack_height() ) {
-      require Carp;
-      Carp::carp("uplevel $num_frames is more than the caller stack");
-    }
-
-    local @Up_Frames = ($num_frames, @Up_Frames );
-    
     return $func->(@args);
 }
 
@@ -98,7 +73,7 @@ sub _uplevel_caller (;$) { ## no critic Prototypes
     # to skip this function's caller
     return $Caller_Proxy->( $height + 1 ) if ! @Up_Frames;
 
-#line 215
+#line 188
 
     my $saw_uplevel = 0;
     my $adjust = 0;
@@ -143,6 +118,7 @@ sub _uplevel_caller (;$) { ## no critic Prototypes
     }
 }
 
-#line 327
+#line 298
+
 
 1;

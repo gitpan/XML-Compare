@@ -7,7 +7,7 @@ build_requires:
   Test::Exception: 0
   Test::More: 0
 distribution_type: module
-generated_by: 'Module::Install version 0.77'
+generated_by: 'Module::Install version 0.76'
 license: artistic
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -22,4 +22,4 @@ requires:
   XML::LibXML: 1.58
 resources:
   repository: git://github.com/catalyst/XML-Compare
-version: 0.03
+version: 0.04
